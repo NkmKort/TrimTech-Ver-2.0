@@ -1,0 +1,137 @@
+#contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.692), rgba(0, 0, 0, 0.712)), 
+                url('/assets/images/bglogo.png');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    color:#fff;
+    margin-top: 1%;
+}
+
+.container {
+    width: 40%;
+}
+
+.contact_title {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.contact_sub {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.contact-form-container {
+    width: 100%;
+}
+
+.input_box {
+    border: none;
+}
+
+.contact_input {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input_flex {
+    display: flex;
+    gap: 10px;
+}
+
+.input_flex input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+}
+
+.review-container {
+    display: flex;
+    height: 100vh;
+}
+
+.image-section {
+    flex: 1;
+    background: url('/assets/images/4.jpg') center/cover no-repeat;
+}
+
+.form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f8f5f2;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+.rating {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.stars {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #af975f;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #8b6e50;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .image-section {
+        height: 40vh;
+    }
+
+    .form-section {
+        height: 60vh;
+    }
+}
+
+button:hover {
+    background-color: #ddd;
+}

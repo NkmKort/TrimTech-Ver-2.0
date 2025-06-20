@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+     <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="homepage-style.css">
+    <link rel="stylesheet" href="../main.css">
+
+    <title>TrimTech - Home</title>    
+   </head>
+   <body id="top">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="logo"><a href="#"><img src="federalbarbers-logo.png" alt="Logo"></a></li>
+            
+            <div class="nav-items">
+                <li><a href="../Booking Page/bookingpage.html">Booking</a></li>
+                <li><a href="../About Page/about.html">About</a></li>
+                <li><a href="../Service Page/servicepage.html">Services</a></li>
+                <li><a href="../Contact Page/contact.html">Contact</a></li>
+            </div>
+
+            <ul class="nav-icons">
+                <li><a href="#"><i class="ri-notification-2-line"></i></a></li>
+                <!-- User Dropdown -->
+                <li class="user-dropdown">
+                    <a href="#" id="user-icon"><i class="ri-user-3-line"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#">Profile</a>
+                        <a href="#">Settings</a>
+                        <a href="#" id="sign-out">Sign Out</a>
+                    </div>
+                </li>
+                <li><a href="#"><i class="ri-list-check"></i></a></li>
+            </ul>  
+        </ul>
+    </nav>
+    <div id="appointmentSidebar" class="sidebar">
+        <h2>Your Appointments</h2>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        <button id="closeSidebar">Close</button>
+    </div>
+    <div id="editProfileModal" class="userProfile-Modal">
+        <div class="userProfile-modalContent">
+            <span class="profilemodal-close-btn" id="closeProfileModal">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <label for="editProfileName">Full Name:</label>
+                <input type="text" id="editProfileName" required>
+    
+                <label for="editProfileEmail">Email:</label>
+                <input type="email" id="editProfileEmail" required>
+    
+                <button type="submit" class="profilemodal-save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    <!-- Header Image -->
+    <div id="header"><video autoplay muted loop id="header-video">
+            <source src="../Home Page/Landers.mp4" type="video/mp4">
+            <img src="header-img.png" alt="Header Image">
+        </video>
+        
+        
+        <div class="header-content">
+            <h1>QUALITY GROOMING, RIGHT WHERE YOU SHOP</h1>
+            <p>At Federal Barbers, we bring expert grooming services to the heart of your routine. Located inside your favorite grocery store, we make looking sharp more convenient than ever—because a fresh cut should be as easy as checking off your shopping list.</p>
+            <a style="font-size: 1em" href="../Booking Page/bookingpage.html" class="book-now-btn">Book Appointment</a>
+        </div>
+    </div>
+    <!-- Info Area -->
+    <section id="info-section">
+        <div class="info-section-innerbox">
+            <h2>Our Styles & Services</h2>
+            <p>place holders lang muna.</p>
+    
+            <!-- Image Gallery -->
+            <div class="image-gallery">
+                <img src="haircut1.jpg" alt="Haircut Style 1">
+                <img src="haircut2.jpg" alt="Haircut Style 2">
+                <img src="haircut3.jpg" alt="Haircut Style 3">
+            </div>
+    
+            <!-- View All Button -->
+            <a href="../Service Page/servicepage.html" class="view-all-btn">View All</a>
+        </div>
+    </section>
+    
+    <!-- FOOTER  -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="../Home Page/homepage.html"><img src="federalbarbers-logo.png" alt="Federal Barbers Logo"></a>
+            </div>
+    
+            <div class="footer-links">
+                <a href="../Booking Page/bookingpage.html">Booking</a>  
+                <a href="../About Page/about.html">About</a>    
+                <a href="../Service Page/servicepage.html">Services</a> 
+                <a href="../Contact Page/contact.html">Contact</a>  
+            </div>
+            
+            <div class="footer-links">
+                <a href="#header">Home</a>  
+                <a href="#info-section">Styles & Services</a>  
+                <a href="#info-section">View Appoinments</a>  
+                <a href="#top">Back to Top</a>   
+            </div>
+
+            <div class="footer-main-social">
+                <p>Socials</p>
+                <div class="footer-social">
+                    <a href="#"><i  class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-line"></i></a>
+                    <a href="#"><i class="ri-twitter-x-line"></i></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>© 2025 Trim Tech. All Rights Reserved.</p>
+        </div>
+    </footer> 
+
+    <script type="module" src="../Home Page/homepage-script.js"></script>
+
+
+</body>
+
+
+</html>

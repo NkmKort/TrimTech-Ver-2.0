@@ -1,0 +1,12 @@
+.main-overview {
+    padding: 20px;
+}
+
+.overview-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-bottom: 20px;
+}

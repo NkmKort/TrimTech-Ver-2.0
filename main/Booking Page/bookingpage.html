@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trim Tech - Booking</title>
+    <link rel="stylesheet" href="../main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2%;
+            padding: 2%;
+            background-image: url('../Home Page/header-img.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin-top: 5%;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar div {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .calendar div:hover {
+            background-color: #ddd;
+        }
+
+        .calendar .today,
+        .calendar .selected {
+            background-color: #d2bb85;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #d2bb85;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2a2823;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .success-message {
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Book Your Appointment</h1>
+        <div id="calendar" class="calendar"></div>
+
+        <div class="input-group">
+            <label for="time">Choose Time</label>
+            <select id="time" required>
+                <option value="">Select Time</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+            </select>
+
+            <label for="chooseService">Choose Barber Service</label>
+            <select id="chooseService" required>
+                <option value="">Select Service</option>
+                    
+            </select>
+            
+            <label for="chooseBranch">Choose Branch</label>
+            <select id="chooseBranch" required>
+                <option value="">Select Branch</option>
+                
+            </select>
+
+            <label for="chooseBarber">Choose Barber</label>
+            <select id="chooseBarber" required>
+                <option value="">Select Barber</option>
+                
+            </select>
+                    
+            <button id="bookBtn">Book Appointment</button>
+            <button id="exitBtn">Exit</button>
+        </div>
+        <div id="message" class="message"></div>
+    </div>
+
+
+
+    <script type="module">
+        import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+        const supabaseUrl = "https://dcyaytjualtuwvantpek.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjeWF5dGp1YWx0dXd2YW50cGVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAyMDU2NjksImV4cCI6MjA1NTc4MTY2OX0.RDsVndAUGJfQN90Ezg_xxoHF-506ST66e7cSzuQ26jM"; // Replace with environment-safe key
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let selectedDate = null;
+
+        async function getUserId() {
+            const { data: { user }, error } = await supabase.auth.getUser();
+            if (error) {
+                console.error("Error getting user:", error);
+                return null;
+            }
+            return user ? user.id : null;
+        }
+
+        function generateCalendar(month, year) {
+            const calendarDiv = document.getElementById("calendar");
+            calendarDiv.innerHTML = "";
+            const firstDay = new Date(year, month, 1);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayDiv = document.createElement("div");
+                dayDiv.textContent = i;
+                dayDiv.addEventListener("click", () => {
+                    selectedDate = new Date(year, month, i);
+                    highlightSelectedDate();
+                });
+                calendarDiv.appendChild(dayDiv);
+            }
+        }
+
+        function highlightSelectedDate() {
+            document.querySelectorAll(".calendar div").forEach(div => div.classList.remove("selected"));
+            document.querySelector(`.calendar div:nth-child(${selectedDate.getDate()})`).classList.add("selected");
+        }
+
+        document.getElementById("bookBtn").addEventListener("click", async () => {
+    const userId = await getUserId();
+    if (!userId) {
+        document.getElementById("message").innerHTML = "<p class='error-message'>Please log in first!</p>";
+        return;
+    }
+
+    if (!selectedDate) {
+        document.getElementById("message").innerHTML = "<p class='error-message'>Please select a date!</p>";
+        return;
+    }
+
+    const time = document.getElementById("time").value;
+    const serviceId = document.getElementById("chooseService").value;
+    const branchId = document.getElementById("chooseBranch").value;
+    const barberId = document.getElementById("chooseBarber").value; // ✅ Retrieve barber_id
+
+    if (!time || !serviceId || !barberId) {
+        document.getElementById("message").innerHTML = "<p class='error-message'>Please select time, service, and barber.</p>";
+        return;
+    }
+
+    const appointmentType = "Booking"; // Assuming service is the appointment type
+
+    const { data, error } = await supabase.from("Appointments").insert([{
+        customer_id: userId,  
+        service_id: serviceId,
+        branch_id: branchId,
+        barber_id: barberId,  // ✅ FIX: Include barber_id
+        appointment_type: appointmentType,
+        date: selectedDate.toISOString().split('T')[0],
+        time: time,
+        status: "pending",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }]);
+
+    document.getElementById("message").innerHTML = error 
+        ? `<p class='error-message'>${error.message}</p>` 
+        : "<p class='success-message'>Appointment booked successfully!</p>";
+});
+
+        const today = new Date();
+        generateCalendar(today.getMonth(), today.getFullYear());
+
+        document.getElementById("exitBtn").addEventListener("click", () => {
+    window.location.href = "../Home Page/homepage.html";
+});
+
+    </script>
+    <script type="module" src="booking-database.js"></script>
+</body>
+</html>

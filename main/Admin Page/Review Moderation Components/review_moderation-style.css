@@ -1,0 +1,54 @@
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.review-table th, .review-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.review-table th {
+    background-color: #f4f4f4;
+}
+
+.review-status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.review-status-approved {
+    color: green;
+    font-weight: bold;
+}
+
+.review-status-hidden {
+    color: red;
+    font-weight: bold;
+}
+
+.btn-approve {
+    background: #2ecc71;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-hide {
+    background: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #b00;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}

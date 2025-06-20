@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+body {
+    margin: 0;
+    padding: 0;
+    background: #d2bb85;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    width: 100%;
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Align logo to the left and nav items to the center */
+    background: #fff;
+
+    width: 100%; /* Full width */
+}
+
+.nav-items {
+    display: flex;
+    justify-content: center; /* Center the navigation items */
+    flex-grow: 1;
+}
+
+.nav-items li {
+    margin: 0px; /* Space out the nav items */
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 0px; /* Space between the icons */
+}
+
+.nav-icons li {
+    list-style: none;
+}
+
+.nav-icons .nav-icon {
+    width: 30px; /* Adjust the size of the icons */
+    height: 30px;
+    object-fit: contain; /* Make sure the icon fits well within the size */
+}
+
+.nav-icons a {
+    display: block;
+    text-align: center;
+}
+  
+  .nav-links .logo {
+    flex: 0 1 auto; /* Keep logo fixed size */
+  }
+  
+  .nav-links .logo img {
+    height: 50px; /* Adjust the size of the logo */
+    width: auto;
+  }
+  
+  .nav-items {
+    display: flex;
+    justify-content: center; /* Center the nav items */
+    flex: 1; /* Take up all remaining space */
+  }
+  
+  .nav-links li {
+    list-style: none;
+    margin: 0 12px;
+  }
+  
+  .nav-links li a {
+    position: relative;
+    color: #333;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 6px 0;
+    text-decoration: none;
+  }
+  
+  .nav-links li a:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #ffffff;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+  }
+  .nav-links li a:before {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Position it just below the link */
+    left: 0;
+    width: 0;
+    height: 3px; /* Thickness of the line */
+    background: #d2bb85; /* Change to the color you want */
+    transition: all 0.3s ease; /* Smooth transition for the effect */
+    opacity: 0;
+  }
+  
+  .nav-links li a:hover:before {
+    width: 100%;
+    opacity: 1; /* Make the line visible */
+  }
+  
+  .nav-links li.upward a:before {
+    left: 0;
+    bottom: -5px;
+  }
+  
+  .nav-links li.forward a:before {
+    left: 0;
+    transform: scaleX(0); /* Scale for 'Contact Us' */
+    transform-origin: right;
+    transition: transform 0.4s ease;
+  }
+  
+  .nav-links li a:hover:before {
+    transform: scaleX(1);
+    transform-origin: left; /* Animate the scaleX from left */
+  }
+/* END OF NAVBAR' */
+
+/* FOOTER DESIGN */
+
+.footer {
+  background: linear-gradient(to right, #d2bb85, #ffffff); /* Brown on left, white on right */
+  color: #2a2823;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Align all footer items */
+.footer-content {
+  display: flex;
+  justify-content: space-between; /* Spaces out the three sections */
+  align-items: flex-start;
+  max-width: 1200px; /* Limits width for better layout */
+  margin: 0 auto; /* Centers the content */
+  padding: 20px;
+}
+
+/* Adjust the footer logo */
+.footer-logo img {
+  width: 100px; /* Adjust logo size */
+}
+
+/* Align links in the center */
+.footer-links {
+  display: grid;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #2a2823;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #e7b33a; /* Gold highlight on hover */
+}
+
+/* Social icons on the right */
+.footer-main-social {
+  display: grid;
+}
+.footer-main-social p{
+  font-size: 1.2em;
+  padding-bottom: 20px;
+}
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+.footer-social a {
+  text-decoration: none; /* Remove underline */
+}
+
+.footer-social i {
+  font-size: 30px; /* Set uniform size */
+  width: 30px; /* Ensure same width */
+  height: 30px; /* Ensure same height */
+  text-align: center;
+  line-height: 30px; /* Align properly */
+  color:#000;
+}
+.footer-social .ri-instagram-line{
+  font-size: 2.3em;
+
+}
+.footer-social a:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Footer bottom section */
+.footer-bottom {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px; /* Moves dropdown lower */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  display: none; /* Hidden by default */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  text-align: center;
+  z-index: 100;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  border: none;
+  background: #d2bb85;
+  color: white;
+  font-size: 1rem;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #2a2823
+}
+
+/* Class to toggle dropdown visibility */
+.show-dropdown {
+  display: block;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  position: fixed;
+  right: -300px; /* Hide offscreen */
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background: white;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  right: 0; /* Slide in */
+}
+
+/* Sidebar Close Button */
+#closeSidebar {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.cancel-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 8px;
+}
+
+.cancel-btn:hover {
+  background: #cc0000;
+}
+
+/* 🔹 Modal Background */
+.userProfile-Modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 Modal Box */
+.userProfile-modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  position: relative;
+}
+
+/* 🔹 Close Button */
+.profilemodal-close-btn{
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 🔹 Save Button */
+.profilemodal-save-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.profilemodal-save-btn:hover {
+  background: #0056b3;
+}

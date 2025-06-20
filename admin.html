@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== EXTERNAL CSS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/global/reset.css">
+    <link rel="stylesheet" href="assets/css/global/styles.css">
+    <link rel="stylesheet" href="assets/css/components/navbar.css">
+    <link rel="stylesheet" href="assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="assets/css/components/card.css">
+    <link rel="stylesheet" href="assets/css/components/search.css">
+    <link rel="stylesheet" href="assets/css/components/button.css">
+    <link rel="stylesheet" href="assets/css/components/table.css">
+    <link rel="stylesheet" href="assets/css/components/pagination.css">
+    <link rel="stylesheet" href="assets/css/components/modal.css">
+    <link rel="stylesheet" href="assets/css/components/form.css">
+    <link rel="stylesheet" href="assets/css/components/message.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/admin.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/overview/overview.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/user management/user_management.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/appointment management/appointment_management.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/queue management/queue_management.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/service management/service_management.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/review moderation/review_moderation.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/reports analytics/reports_analytics.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/notification_management/notification_management.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/system settings/system_settings.css">
+    <link rel="stylesheet" href="assets/css/pages/admin/security backups/security_backups.css">
+    
+    <!--=============== EXTERNAL JS ===============-->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Federal Barbers - Admin Dashboard</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="logo"><a href="index.html"><img src="assets/images/federalbarbers-logo.png" alt="Logo"></a></li>
+            
+            <div class="nav-items">
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </div>
+
+
+            <div class="nav-icons">
+                <li><a href="#"><i class="ri-notification-2-line"></i></a></li>
+
+                <!-- User Dropdown -->
+                <li class="user-dropdown">
+                    <a href="#" id="user-icon"><i class="ri-user-3-line"></i></a>
+                    <div class="dropdown-menu">
+
+                        <a href="#" id="sign-out">Sign Out</a>
+                    </div>
+                </li>
+
+                <li><a id="listIcon" href="#"><i class="ri-list-check"></i></a></li>
+            </div>
+        </ul>
+    </nav>
+    <div id="appointmentSidebar" class="sidebar">
+        <br>
+        <h2>Your Appointments</h2>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        <button id="closeSidebar">Close</button>
+    </div>
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+        <div>
+            <h3 class="admin-sidebar-subtitle">Navigation</h3>
+            <h2 class="admin-sidebar-title">Admin Dashboard</h2>
+        </div>
+        
+        <div>
+            <nav class="admin-sidebar-nav">
+                <ul class="admin-sidebar-nav-list">
+                    <li class="admin-sidebar-nav-item active" onclick="setActive(this)"><i class="ri-dashboard-line"></i> Overview</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-user-line"></i> User Management</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-calendar-line"></i> Appointment Management</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-time-line"></i> Queue Management</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-money-dollar-box-line"></i> Service Management</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-chat-check-line"></i> Review Moderation</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-bar-chart-line"></i> Reports & Analytics</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-notification-3-line"></i> Notification Management</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-settings-3-line"></i> System Settings</li>
+                    <li class="admin-sidebar-nav-item" onclick="setActive(this)"><i class="ri-shield-line"></i> Security & Backups</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="main-overview active">
+            <h2>Dashboard Overview</h2>
+        
+            <div class="overview-cards">
+                <div class="card-section">
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-hand-coin-line"></i>
+                            <h3>Total Revenue Today</h3>
+                        </div>
+                        <p id="overviewDailyRevenue">Php 0.00<!-- Total Revenue Today will be dynamically loaded here --></p>
+                    </div>
+                </div>
+        
+                <div class="card-section">
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-coin-line"></i>
+                            <h3>Total Revenue This Month</h3>
+                        </div>
+                        <p id="overviewMonthlyRevenue">Php 0.00<!-- Total Revenue this month will be dynamically loaded here --></p>
+                    </div>
+                </div>
+        
+                <div class="card-section">
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="ri-calendar-event-line"></i>
+                            <h3>Upcoming Appointments</h3>
+                        </div>
+                        <p id="overviewUpcomingAppointments">0<!-- Number of upcoming appointments will be dynamically loaded here --></p>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <h2>Upcoming Appointments</h2>
+            <br>
+
+            <!-- Upcoming Appointments List Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Branch</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="overviewUpcomingAppointmentsTableBody">
+                    <!-- Upcoming appointments will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="main-user_management">
+            <h2>User Management</h2>
+            <br>
+            <!-- Search & Filter -->
+            <div class="search">
+                <input type="text" id="searchUser" placeholder="Search by name or email..." onkeyup="filterUsers()">
+                <select id="filterRole" onchange="filterUsers()">
+                    <option value="">All Roles</option>
+                    <option value="customer">Customer</option>
+                    <option value="barber">Barber</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <!-- Add User Button -->
+            <button class="btn btn-add btn-blue" onclick="openAddUserModal()" id="showAddUserModal">+ Add User</button>
+
+            <!-- User List Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Users will be dynamically loaded here -->
+                </tbody>
+            </table>
+            <br>
+
+            <!-- User Pagination -->
+            <div class="pagination">
+                <button id="userPrevPage">Previous</button>
+                <span id="userPagination">Page 1 of 1</span>
+                <button id="userNextPage">Next</button>
+            </div>
+
+            <!-- Add User Modal -->
+            <div id="addUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddUserModal()">&times;</span>
+                    <h3>Add New User</h3>
+                    <br>
+                    <div id="addUserMessage" class="message"></div>
+                    <form id="addUserForm" class="form" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-user-5-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="name" class="form-input" placeholder=" " id="addUserForm-name" required>
+                                    <label for="addUserForm-name" class="form-label">Name</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-mail-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="email" class="form-input" placeholder=" " id="addUserForm-email" required>
+                                    <label for="addUserForm-email" class="form-label">Email</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-phone-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" class="form-input" id="addUserForm-phone" placeholder=" " required required pattern="0[9][0-9]{9}" maxlength="11">
+                                    <label for="addUserForm-phone" class="form-label">Phone Number(63+)</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-lock-2-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="password" class="form-input" id="addUserForm-password" placeholder=" " required>
+                                    <label for="addUserForm-password" class="form-label">Password</label>
+                                    <i class="ri-eye-close-line form-eye form-viewoff" id="addUserForm-eye"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-user-settings-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="addUserForm-role" class="form-input">
+                                        <option value="">Select Role</option>
+                                        <option value="customer">Customer</option>
+                                        <option value="barber">Barber</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="admin,barber">Admin Barber</option>
+                                    </select>
+                                    <label for="addUserForm-role" class="form-label">Role</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitAddUser">Save User</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit User Modal -->
+            <div id="editUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditUserModal()">&times;</span>
+                    <h3>Edit User</h3>
+                    <br>
+                    <div id="editUserMessage" class="message"></div>
+                    <form id="editUserForm" class="form" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-user-5-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="editUserForm-name" class="form-input" required>
+                                    <label for="editUserForm-name" class="form-label">Name</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-phone-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="editUserForm-phone" class="form-input" required required pattern="0[9][0-9]{9}" maxlength="11">
+                                    <label for="editUserForm-phone" class="form-label">Phone Number(63+)</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-user-settings-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="editUserForm-role" class="form-input" required>
+                                        <option value="customer">Customer</option>
+                                        <option value="barber">Barber</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="admin,barber">Admin Barber</option>
+                                    </select>
+                                    <label for="editUserForm-role" class="form-label">Role</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitEditUser">Update User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-appointment_management">
+            <h2>Appointment Management</h2>
+            <br>
+            <!-- Search & Filter -->
+            <div class="search">
+                <input type="text" id="searchAppointment" placeholder="Search..." onkeyup="filterAppointments()">
+                <div>
+                    <select id="filterBranch" onchange="filterAppointments()">
+                        <option value="">All Branches</option>
+                        <!-- Branches will be dynamically inserted here -->
+                    </select>
+
+                    <select id="filterStatus" onchange="filterAppointments()">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="No Show">No Show</option>
+                        <option value="Extended">Extended</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!-- Add Appointment Button -->
+            <button id="showAddAppointmentModal" class="btn btn-add btn-blue" onclick="openAddAppointmentModal()">+ Add Appointment</button>
+        
+            <!-- Appointment List Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Cost</th>
+                        <th>Branch</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Appointment Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <!-- Appointments will be dynamically inserted here -->
+                </tbody>
+            </table>
+            <br>
+
+            <!-- Appointment Pagination -->
+            <div class="pagination">
+                <button id="appointmentPrevPage">Previous</button>
+                <span id="appointmentPagination">Page 1 of 1</span>
+                <button id="appointmentNextPage">Next</button>
+            </div>
+
+            <!-- Add Appointment Modal -->
+            <div id="addAppointmentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddAppointmentModal()">&times;</span>
+                    <h3>Add New Appointment</h3>
+                    <br>
+                    <div id="addAppointmentMessage" class="message"></div>
+                    <form id="addAppointmentForm" class="form" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-mail-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="email" id="addAppointmentForm-customerEmail" class="form-input" required>
+                                    <label for="addAppointmentForm-customerEmail" class="form-label">Customer Email</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-user-5-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="addAppointmentForm-barberName" class="form-input" required>
+                                        <option value="">Select Barber</option>
+                                        <!-- Barbers will be dynamically inserted here -->
+                                    </select>
+                                    <label for="addAppointmentForm-barberName" class="form-label">Barber</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-scissors-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="addAppointmentForm-serviceName" class="form-input" required>
+                                        <option value="">Select Service</option>
+                                        <!-- Services will be dynamically inserted here -->
+                                    </select>
+                                    <label for="addAppointmentForm-serviceName" class="form-label">Service</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-store-2-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="addAppointmentForm-branchName" class="form-input" required>
+                                        <option value="">Select Branch</option>
+                                        <!-- Branches will be dynamically inserted here -->
+                                    </select>
+                                    <label for="addAppointmentForm-branchName" class="form-label">Branch</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-calendar-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="date" id="addAppointmentForm-date" class="form-input" required>
+                                    <label for="addAppointmentForm-date" class="form-label">Date</label>
+                                </div>
+                            </div>
+                
+                            <div class="form-box">
+                                <i class="ri-time-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select type="time" id="addAppointmentForm-time" class="form-input" required>
+                                        <option value="">Select Time</option>
+                                        <option value="09:00">09:00</option>
+                                        <option value="09:30">09:30</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="10:30">10:30</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="11:30">11:30</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="12:30">12:30</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="13:30">13:30</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="14:30">14:30</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="15:30">15:30</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="16:30">16:30</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="17:30">17:30</option>
+                                    </select>
+                                    <label for="addAppointmentForm-time" class="form-label">Time</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-box">
+                                <i class="ri-walk-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="addAppointmentForm-type" class="form-input" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Walk-in">Walk-in</option>
+                                        <option value="Booked">Booked</option>
+                                        <option value="Extension">Extension</option>
+                                    </select>
+                                    <label for="addAppointmentForm-type" class="form-label">Appointment Type</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitAddAppointment">Add Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Appointment Modal -->
+            <div id="editAppointmentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditAppointmentModal()">&times;</span>
+                    <h3>Edit Appointment</h3>
+                    <br>
+                    <div id="editAppointmentMessage" class="message"></div>
+                    <form id="editAppointmentForm" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-checkbox-circle-line"></i>
+                                <div class="form-box-input">
+                                    <select id="editAppointmentForm-status" class="form-input" required>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Confirmed">Confirmed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="No Show">No Show</option>
+                                        <option value="Extended">Extended</option>
+                                    </select>
+                                    <label for="editAppointmentForm-status" class="form-label">Status</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitEditAppointment">Update Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-queue_management">
+            <h2>Queue Management</h2>
+            <br>
+            <!-- Search & Filter -->
+            <div class="search">
+                <input type="text" id="searchQueue" placeholder="Search..." onkeyup="filterQueues()">
+                <div>
+                    <select id="queueFilterBranch" onchange="filterQueues()">
+                        <option value="">All Branches</option>
+                        <!-- Branches will be dynamically inserted here -->
+                    </select>
+
+                    <select id="queueFilterStatus" onchange="filterQueues()">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="No Show">No Show</option>
+                        <option value="Extended">Extended</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Add to Queue Button -->
+            <button class="btn btn-add btn-blue" id="showAddQueueModal" onclick="openAddQueueModal()">+ Add to Queue</button>
+        
+            <!-- Queue Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Cost</th>
+                        <th>Branch</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="queueTableBody">
+                    <!-- Queue will be dynamically inserted here -->
+                </tbody>
+            </table>
+
+            <!-- Add to Queue Modal -->
+            <div id="addQueueModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddQueueModal()">&times;</span>
+                    <h3>Add Walk-in Customer</h3>
+                    <br>
+                    <div id="addQueueMessage" class="message"></div>
+                    <form id="addQueueForm" class="form">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-mail-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="email" id="queueEmail" class="form-input" required>
+                                    <label for="queueEmail" class="form-label">Customer Email</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-user-5-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="queueBarber" class="form-input" required>
+                                        <option value="">Select Barber</option>
+                                        <!-- Barbers will be dynamically loaded here -->
+                                    </select>
+                                    <label for="queueBarber" class="form-label">Barber</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-scissors-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="queueService" class="form-input" required>
+                                        <option value="">Select Service</option>
+                                        <!-- Services will be dynamically loaded here -->
+                                    </select>
+                                    <label for="queueService" class="form-label">Service</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-store-2-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <select id="queuebranch" class="form-input" required>
+                                        <option value="">Select Branch</option>
+                                        <!-- Branches will be dynamically inserted here -->
+                                    </select>
+                                    <label for="queuebranch" class="form-label">Branch</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="submit-button btn-green" id="submitAddQueue">Add to Queue</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Queue Modal -->
+            <div id="editQueueModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditQueueModal()">&times;</span>
+                    <h3>Edit Queue</h3>
+                    <br>
+                    <div id="editQueueMessage" class="message"></div>
+                    <form id="editQueueForm" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-checkbox-circle-line"></i>
+                                <div class="form-box-input">
+                                    <select id="queueStatus" class="form-input" required>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Confirmed">Confirmed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="No Show">No Show</option>
+                                        <option value="Extended">Extended</option>
+                                    </select>
+                                    <label for="queueStatus" class="form-label">Status</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitEditQueue">Update Queue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-service_management">
+            <h2>Service Management</h2>
+            <br>
+
+            <!-- Search & Filter -->
+            <div class="search">
+                <input type="text" id="searchService" placeholder="Search..." onkeyup="filterServices()">
+            </div>
+
+            <!-- Add Service Button -->
+            <button class="btn btn-add btn-blue" id="showAddServiceModal" onclick="openAddServiceModal()">+ Add Service</button>
+
+            <!-- Service Table List -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="serviceTableBody">
+                    <!-- Services will be dynamically inserted here -->
+                </tbody>
+            </table>
+
+            <!-- Add Service Modal -->
+            <div id="addServiceModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddServiceModal()">&times;</span>
+                    <h3>Add New Service</h3>
+                    <br>
+                    <div id="addServiceMessage" class="message"></div>
+                    <form id="addServiceForm" action="">
+                        <div class="form-contents">
+                            <div class="form-box">
+                                <i class="ri-scissors-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="addServiceForm-serviceName" class="form-input" required>
+                                    <label for="serviceName" class="form-label">Service Name</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-file-list-3-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="addServiceForm-serviceDescription" class="form-input" required>
+                                    <label for="serviceDescription" class="form-label">Description</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-price-tag-3-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="number" id="addServiceForm-servicePrice" class="form-input" required>
+                                    <label for="servicePrice" class="form-label">Price</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitAddService">Save Service</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Service Modal -->
+            <div id="editServiceModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditServiceModal()">&times;</span>
+                    <h2>Edit Service</h2>
+                    <br>
+                    <div id="editServiceMessage" class="message"></div>
+                    <form id="editServiceForm">
+                        <div class="form-contents">
+                            <input type="hidden" id="editServiceForm-service_id">
+
+                            <div class="form-box">
+                                <i class="ri-scissors-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="editServiceForm-serviceName" class="form-input" required>
+                                    <label for="editServiceForm-serviceName" class="form-label">Service Name</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-file-list-3-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="text" id="editServiceForm-serviceDescription" class="form-input" required>
+                                    <label for="editServiceForm-serviceDescription" class="form-label">Description</label>
+                                </div>
+                            </div>
+
+                            <div class="form-box">
+                                <i class="ri-price-tag-3-line form-icon"></i>
+                                <div class="form-box-input">
+                                    <input type="number" id="editServiceForm-servicePrice" step="0.01" class="form-input" required>
+                                    <label for="editServiceForm-servicePrice" class="form-label">Price</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button btn-green" id="submitEditService">Update Service</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-review_moderation">
+            <h2>Review Moderation</h2>
+            <br>
+
+            <!-- Search & Filter -->
+            <div class="search">
+                <input type="text" id="searchReview" placeholder="Search..." onkeyup="filterReviews()">
+            </div>
+
+            <!-- Reviews Table List -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewsTableBody">
+                    <!-- Reviews will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="main-reports_analytics">
+            <h2>Reports & Analytics</h2>
+        
+            <div class="reports_analytics-cards">
+                <div class="card-section" id="dailyReport">
+                    <div class="card">
+                        <h3>Total Revenue Today</h3>
+                        <p id="dailyTotalRevenue"><!-- Total Revenue today will be dynamically loaded here --></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Total Completed Appointments Today</h3>
+                        <p id="dailyTotalAppointments"><!-- Total Appointments today will be dynamically loaded here --></p>
+                    </div>
+            
+                    <div class="card">
+                        <h3>Returning Customers Today</h3>
+                        <p id="dailyReturningCustomers"><!-- Number of Returning Customers today will be dynamically loaded here --></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>New Customers Today</h3>
+                        <p id="dailyNewCustomers"><!-- Number of New Customers today will be dynamically loaded here --></p>
+                    </div>
+                </div>
+                
+                <div class="card-section" id="monthlyReport">
+                    <div class="card">
+                        <h3>Total Revenue This Month</h3>
+                        <p id="monthlyTotalRevenue"><!-- Total Revenue this month will be dynamically loaded here --></p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Total Completed Appointments This Month</h3>
+                        <p id="monthlyTotalAppointments"><!-- Total Appointments this month will be dynamically loaded here --></p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Returning Customers This Month</h3>
+                        <p id="monthlyReturningCustomers"><!-- Number of Returning Customers this month will be dynamically loaded here --></p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>New Customers This Month</h3>
+                        <p id="monthlyNewCustomers"><!-- Number of New Customers this month will be dynamically loaded here --></p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="reports_analytics-cards">
+                <div class="card-section">
+                    <div class="card">
+                        <h3>Appointments by Barber</h3>
+                        <canvas id="barberChart"><!-- Appointments by Barber will be dynamically loaded here --></canvas>
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <div class="card">
+                        <h3>Popular Services</h3>
+                        <canvas id="serviceChart"><!-- Popular Services will be dynamically loaded here --></canvas>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <button class="btn btn-add btn-blue" onclick="exportReport()">Download CSV Report</button>
+        </div>        
+
+        <div class="main-notification_management">
+            <h2>Notification Management</h2>
+            <br>
+            <div class="notification-form">
+                <form id="notification-form">
+                    <div class="form-flex">
+                        <div>
+                            <label for="recipientType">Recipient Type:</label>
+                            <select id="recipientType">
+                                <option id="customers" value="customers">Customers</option>
+                                <option id="barber" value="barber">Barbers</option>
+                            </select>
+                        </div>
+                        <div>                    
+                            <label for="statusType">Status:</label>
+                            <select id="statusType">
+                                <option id="confirmed" value="confirmed">Confirmed</option>
+                                <option id="cancelled" value="cancelled">Cancelled</option>
+                                <option id="rescheduled" value="rescheduled">Rescheduled</option>
+                            </select></div>
+                        <div>
+                            <input type="email" id="user_email" name="email" maxlength="80" placeholder="Email Address" required>
+                                            
+                            <input type="text" id="searchInput" placeholder="Search Appointment by Name">
+                        </div>
+                    </div>
+                    <br>
+                    <select id="appointmentSelect">
+                        <option> Select Appointment </option>
+                        <!-- Appointments are dynamically displayed-->
+                    </select>
+                    
+                    <label for="notificationMessage">Message:</label>
+                    <textarea id="notificationMessage" rows="3" placeholder="Enter notification message"></textarea>
+            
+                    <button type="submit">Send Notification</button>
+
+                </form>
+            </div>
+            <br>
+            <h3>Sent Notifications</h3>
+            <table class="notification-table">
+                <thead>
+                    <tr>
+                        <th>Recipient Type</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="notificationTableBody">
+                    <!-- Notifications will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="main-system_settings">
+            <h2>System Settings</h2>
+        
+            <!-- Business Hours Settings -->
+            <div class="settings-section">
+                <h3>Business Hours</h3>
+                <label for="openingTime">Opening Time:</label>
+                <input type="time" id="openingTime">
+                <label for="closingTime">Closing Time:</label>
+                <input type="time" id="closingTime">
+                <button onclick="saveBusinessHours()">Save</button>
+            </div>
+        
+            <!-- Service Duration Settings -->
+            <div class="settings-section">
+                <h3>Service Duration</h3>
+                <label for="serviceDuration">Duration per Appointment (minutes):</label>
+                <input type="number" id="serviceDuration" min="10" max="120">
+                <button onclick="saveServiceDuration()">Save</button>
+            </div>
+        
+            <!-- Booking Preferences -->
+            <div class="settings-section">
+                <h3>Booking Preferences</h3>
+                <label for="maxBookings">Max Bookings per Day:</label>
+                <input type="number" id="maxBookings" min="1" max="100">
+                <label>
+                    <input type="checkbox" id="onlineBookings"> Enable Online Bookings
+                </label>
+                <button onclick="saveBookingPreferences()">Save</button>
+            </div>
+        
+            <!-- Security Settings -->
+            <div class="settings-section">
+                <h3>Security Settings</h3>
+                <label>
+                    <input type="checkbox" id="passwordPolicy"> Enforce Strong Passwords
+                </label>
+                <label>
+                    <input type="checkbox" id="accountLockout"> Enable Account Lockout After 3 Failed Logins
+                </label>
+                <button onclick="saveSecuritySettings()">Save</button>
+            </div>
+        
+            <!-- Backup & Restore -->
+            <div class="settings-section">
+                <h3>Backup & Restore</h3>
+                <button onclick="backupData()">Backup Data</button>
+                <input type="file" id="restoreFile">
+                <button onclick="restoreData()">Restore Data</button>
+            </div>
+        </div>        
+
+        <div class="main-security_backups">
+            <h2>Security & Backups</h2>
+        
+            <!-- User Authentication Settings -->
+            <div class="security-section">
+                <h3>Authentication & Security Policies</h3>
+                <label>
+                    <input type="checkbox" id="strongPasswords"> Enforce Strong Passwords
+                </label>
+                <label>
+                    <input type="checkbox" id="enable2FA"> Enable Two-Factor Authentication (2FA)
+                </label>
+                <label for="autoLogout">Auto Logout After (minutes):</label>
+                <input type="number" id="autoLogout" min="1" max="60">
+                <button onclick="saveSecuritySettings()">Save</button>
+            </div>
+        
+            <!-- Account Management -->
+            <div class="security-section">
+                <h3>Account Management</h3>
+                <button onclick="viewLockedAccounts()">View Locked Accounts</button>
+                <button onclick="viewLoginAttempts()">View Failed Login Attempts</button>
+            </div>
+        
+            <!-- Backup & Restore -->
+            <div class="security-section">
+                <h3>Backup & Restore</h3>
+                <button onclick="backupData()">Backup Data</button>
+                <input type="file" id="restoreFile">
+                <button onclick="restoreData()">Restore Data</button>
+            </div>
+        
+            <!-- Audit Logs -->
+            <div class="security-section">
+                <h3>Audit Logs & Activity Monitoring</h3>
+                <button onclick="viewAuditLogs()">View Logs</button>
+            </div>
+        </div>        
+    </div>
+
+    <!--=============== JS ===============-->
+    <script type="module" src="assets/js/components/navbar.js"></script>
+    <script src="assets/js/pages/admin/admin.js"></script>
+    <script src="assets/js/pages/admin/overview/overview_.js"></script>
+    <script type="module" src="assets/js/pages/admin/overview/database.js"></script>
+    <script src="assets/js/pages/admin/user management/user_management.js"></script>
+    <script type="module" src="assets/js/pages/admin/user management/database.js"></script>
+    <script src="assets/js/pages/admin/appointment management/appointment_management.js"></script>
+    <script type="module" src="assets/js/pages/admin/appointment management/database.js"></script>
+    <script src="assets/js/pages/admin/queue management/queue_management.js"></script>
+    <script type="module" src="assets/js/pages/admin/queue management/database.js"></script>
+    <script src="assets/js/pages/admin/service management/service_management.js"></script>
+    <script type="module" src="assets/js/pages/admin/service management/database.js"></script>
+    <script src="assets/js/pages/admin/review moderation/review_moderation.js"></script>
+    <script type="module" src="assets/js/pages/admin/review moderation/database.js"></script>
+    <script src="assets/js/pages/admin/reports analytics/reports_analytics.js"></script>
+    <script type="module" src="assets/js/pages/admin/reports analytics/database.js"></script>
+    <script src="assets/js/pages/admin/notification_management/notification_management.js"></script>
+    <script type="module" src="assets/js/pages/admin/notification_management/database.js"></script>
+    <script src="assets/js/pages/admin/system settings/system_settings.js"></script>
+    <script type="module" src="assets/js/pages/admin/system settings/database.js"></script>
+    <script src="assets/js/pages/admin/security backups/security_backups.js"></script>
+    <script type="module" src="assets/js/pages/admin/security backups/database.js"></script>
+</body>
+</html>

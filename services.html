@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== EXTERNAL CSS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets\css\global\reset.css">
+    <link rel="stylesheet" href="assets\css\global\styles.css">
+    <link rel="stylesheet" href="assets\css\components\navbar.css">
+    <link rel="stylesheet" href="assets\css\components\footer.css">
+    <link rel="stylesheet" href="assets\css\pages\services\services.css">
+    
+    <title>Federal Barbers - Services</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="logo"><a href="index.html"><img src="assets/images/federalbarbers-logo.png" alt="Logo"></a></li>
+            
+            <div class="nav-items">
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </div>
+
+
+            <div class="nav-icons">
+                <li><a href="#"><i class="ri-notification-2-line"></i></a></li>
+
+                <!-- User Dropdown -->
+                <li class="user-dropdown">
+                    <a href="#" id="user-icon"><i class="ri-user-3-line"></i></a>
+                    <div class="dropdown-menu">
+
+                        <a href="#" id="sign-out">Sign Out</a>
+                    </div>
+                </li>
+
+                <li><a id="listIcon" href="#"><i class="ri-list-check"></i></a></li>
+            </div>
+        </ul>
+    </nav>
+    <div id="appointmentSidebar" class="sidebar">
+        <br>
+        <h2>Your Appointments</h2>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        <button id="closeSidebar">Close</button>
+    </div>
+    <section class="gallery-section">
+        <div id="services">
+            <h2>Our Services</h2>
+            <div class="gallery-container">
+                <!-- Contents are dynamically loaded-->
+            </div>
+        </div>
+
+        <div id="haircut">
+            <h2>Our Haircut Styles</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="assets/images/haircut1.jpg" alt="Classic Cut">
+                    <h3>Classic Cut</h3>
+                    <p>$15 - A timeless look with clean edges and a fresh finish.</p>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="assets/images/haircut2.jpg" alt="Fade Cut">
+                    <h3>Fade Cut</h3>
+                    <p>$20 - A smooth blend from short to long, perfect for a modern style.</p>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="assets/images/haircut3.jpg" alt="Undercut">
+                    <h3>Undercut</h3>
+                    <p>$18 - Bold and stylish, with short sides and longer top styling options.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="index.html"><img src="assets/images/federalbarbers-logo.png" alt="Federal Barbers Logo"></a>
+            </div>
+    
+            <div class="footer-links">
+                <a href="booking.html">Booking</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+
+            <div class="footer-links">
+                <a href="#services">Services</a>  
+                <a href="#haircut">Haircut Styles</a>  
+                <a href="#info-section">View Appoinments</a>  
+                <a href="#top">Back to Top</a>   
+            </div>
+
+            <div class="footer-main-social">
+                <p>Socials</p>
+                <div class="footer-social">
+                    <a href="#"><i  class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-line"></i></a>
+                    <a href="#"><i class="ri-twitter-x-line"></i></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>© 2025 Trim Tech. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!--=============== JS ===============-->
+    <script type="module" src="assets/js/components/navbar.js"></script>
+    <script type="module" src="assets\js\pages\services\services.js"></script>
+</body>
+</html>

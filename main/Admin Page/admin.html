@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== ADMIN CSS ===============-->
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="Overview Components/overview-style.css">
+    <link rel="stylesheet" href="User Management Components/user_management-style.css">
+    <link rel="stylesheet" href="Appointment Management Components/appointment_management-style.css">
+    <link rel="stylesheet" href="Queue Management Components/queue_management-style.css">
+    <link rel="stylesheet" href="Service Management Components/service_management-style.css">
+    <link rel="stylesheet" href="Review Moderation Components/review_moderation-style.css">
+    <link rel="stylesheet" href="Reports Analytics Components/reports_analytics-style.css">
+    <link rel="stylesheet" href="Notification Management Components/notification_management-style.css">
+    <link rel="stylesheet" href="System Settings Components/system_settings-style.css">
+    <link rel="stylesheet" href="Security Backups Components/security_backups-style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="logo"><a href="../Home Page/homepage.html"><img src="../Home Page/federalbarbers-logo.png" alt="Logo"></a></li>
+            
+            <div class="nav-items">
+                <li><a href="../Booking Page/bookingpage.html">Booking</a></li>
+                <li><a href="../About Page/about.html">About</a></li>
+                <li><a href="../Service Page/servicepage.html">Services</a></li>
+                <li><a href="../Contact Page/contact.html">Contact</a></li>
+            </div>
+
+            <ul class="nav-icons">
+                <li><a href="#"><i class="ri-notification-2-line"></i></a></li>
+            
+                <li class="nav-dropdown">
+                    <a href="#" id="userIcon"><i class="ri-user-3-line"></i></a>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <button id="signOutBtn">Sign Out</button>
+                    </div>
+                </li>
+                <li><a id="listIcon" href="#"><i class="ri-list-check"></i></a></li>
+            </ul>   
+        </ul>
+    </nav>
+    <div id="appointmentSidebar" class="sidebar">
+        <h2>Your Appointments</h2>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        <button id="closeSidebar">Close</button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div>
+            <h3 class="sidebar-subtitle">Navigation</h3>
+            <h2 class="sidebar-title">Admin Dashboard</h2>
+        </div>
+        
+        <div>
+            <nav class="sidebar-nav">
+                <ul class="sidebar-nav-list">
+                    <li class="sidebar-nav-item active" onclick="setActive(this)"><i class="ri-dashboard-line"></i> Overview</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-user-line"></i> User Management</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-calendar-line"></i> Appointment Management</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-time-line"></i> Queue Management</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-money-dollar-box-line"></i> Service Management</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-chat-check-line"></i> Review Moderation</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-bar-chart-line"></i> Reports & Analytics</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-notification-3-line"></i> Notification Management</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-settings-3-line"></i> System Settings</li>
+                    <li class="sidebar-nav-item" onclick="setActive(this)"><i class="ri-shield-line"></i> Security & Backups</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="main-overview active">
+            <h2>Dashboard Overview</h2>
+        
+            <div class="overview-cards">
+                <div class="card">
+                    <i class="ri-user-line"></i>
+                    <h3>Clients</h3>
+                    <p id="clientCount">0</p>
+                </div>
+        
+                <div class="card">
+                    <i class="ri-scissors-line"></i>
+                    <h3>Barbers</h3>
+                    <p id="barberCount">0</p>
+                </div>
+        
+                <div class="card">
+                    <i class="ri-admin-line"></i>
+                    <h3>Admins</h3>
+                    <p id="adminCount">0</p>
+                </div>
+            </div>
+        </div>        
+
+        <div class="main-user_management">
+            <h2>User Management</h2>
+
+            <!-- Search & Filter -->
+            <div class="user-search">
+                <input type="text" id="searchUser" placeholder="Search by name or email..." onkeyup="filterUsers()">
+                <select id="filterRole" onchange="filterUsers()">
+                    <option value="">All Roles</option>
+                    <option value="customer">Customer</option>
+                    <option value="barber">Barber</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <!-- Add User Button -->
+            <button class="btn btn-add" onclick="openAddUserModal()" id="show-signup">+ Add User</button>
+
+            <!-- Add User Modal -->
+            <div id="addUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddUserModal()">&times;</span>
+                    <h3>Add New User</h3>
+                    <br>
+                    <div id="signUpMessage" class="messageDiv"></div>
+                    <form action="" class="signup-form">
+                        <div class="signup-contents">
+                            <div class="signup-box">
+                                <i class="ri-user-5-line login-icon"></i>
+                                <div class="signup-box-input">
+                                    <input type="name" class="signup-input" placeholder=" " id="rName" required>
+                                    <label for="rName" class="signup-label">Name</label>
+                                </div>
+                            </div>
+        
+                            <div class="signup-box">
+                                <i class="ri-mail-line login-icon"></i>
+                                <div class="signup-box-input">
+                                    <input type="email" class="signup-input" placeholder=" " id="rEmail" required>
+                                    <label for="rEmail" class="signup-label">Email</label>
+                                </div>
+                            </div>
+        
+                            <div class="signup-box">
+                                <i class="ri-phone-line login-icon"></i>
+                                <div class="signup-box-input">
+                                    <input type="text" class="signup-input" id="signup-phone" placeholder=" " required required pattern="0[9][0-9]{9}" maxlength="11">
+                                    <label for="signup-phone" class="signup-label">Phone Number(63+)</label>
+                                </div>
+                            </div>
+        
+                            <div class="signup-box">
+                                <i class="ri-lock-2-line"></i>
+                                <div class="signup-box-input">
+                                    <input type="password" class="signup-input" id="signup-password" placeholder=" " required>
+                                    <label for="signup-password" class="signup-label">Password</label>
+                                    <i class="ri-eye-close-line login-viewoff" id="signup-eye" ></i>
+                                </div>
+                            </div>
+
+                            <div class="signup-box">
+                                <i class="ri-user-settings-line login-icon"></i>
+                                <div class="signup-box-input">
+                                    <select id="signup-role" class="signup-input">
+                                        <option value="customer">Customer</option>
+                                        <option value="barber">Barber</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="admin,barber">Admin Barber</option>
+                                    </select>
+                                    <label for="signup-role" class="signup-label">Role</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="submit-button" id="submitSignup">Save User</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit User Modal -->
+            <div id="editUserModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditUserModal()">&times;</span>
+                    <h3>Edit User</h3>
+                    <br>
+                    <div id="editUserMessage" class="messageDiv"></div>
+                    <form action="" id="editUserForm">
+                        <label for="editUserName">Name</label>
+                        <input type="text" id="editUserName" required>
+                        <label for="editUserPhone">Phone Number(63+)</label>
+                        <input type="text" id="editUserPhone" required required pattern="0[9][0-9]{9}" maxlength="11">
+                        <label for="editUserRole">Role</label>
+                        <select id="editUserRole" required>
+                            <option value="customer">Customer</option>
+                            <option value="barber">Barber</option>
+                            <option value="admin">Admin</option>
+                            <option value="admin,barber">Admin Barber</option>
+                        </select>
+                        <br>
+                        <br>
+                        <button class="submit-button" id="submitEditUser">Update User</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- User List Table -->
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Users will be dynamically loaded here -->
+                </tbody>
+            </table>
+            <br>
+            <!-- Add this after the user table -->
+            <div class="pagination-controls">
+                <button id="prevPage">Previous</button>
+                <span id="pagination">Page 1 of 1</span>
+                <button id="nextPage">Next</button>
+            </div>
+        </div>
+
+        <div class="main-appointment_management">
+            <h2>Appointment Management</h2>
+
+            <!-- Search & Filter -->
+            <div class="appointment-search">
+                <input type="text" id="searchAppointment" placeholder="Search..." onkeyup="filterAppointments()">
+                <select id="filterStatus" onchange="filterAppointments()">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Completed">Completed</option>
+                    <option value="No Show">No Show</option>
+                </select>
+            </div>
+        
+            <button id="addAppointmentButton" class="btn-add" onclick="openAddAppointmentModal()">+ Add Appointment</button>
+        
+            <table class="appointment-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Barber</th>
+                        <th>Service</th>
+                        <th>Branch</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Appointment Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <!-- Appointments will be dynamically inserted here -->
+                </tbody>
+            </table>
+
+            <!-- Add Appointment Modal -->
+            <div id="addAppointmentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddAppointmentModal()">&times;</span>
+                    <h3>Add New Appointment</h3>
+                    <div id="addAppointmentMessage" class="messageDiv"></div>
+                    <form id="addAppointmentForm" class="addAppointmentForm">
+                        <label for="addAppointmentCustomerEmail">Customer Email:</label>
+                        <input type="email" id="addAppointmentCustomerEmail" required>
+            
+                        <label for="addAppointmentBarberName">Barber:</label>
+                        <select id="addAppointmentBarberName" required>
+                            <option value="">Select Barber</option>
+                            <!-- Barbers will be dynamically inserted here -->
+                        </select>
+
+                        <label for="addAppointmentServiceName">Service:</label>
+                        <select id="addAppointmentServiceName" required>
+                            <option value="">Select Service</option>
+                            <!-- Services will be dynamically inserted here -->
+                        </select>
+
+                        <label for="addAppointmentBranchName">Branch:</label>
+                        <select id="addAppointmentBranchName" required>
+                            <option value="">Select Branch</option>
+                            <!-- Branches will be dynamically inserted here -->
+                        </select>
+            
+                        <label for="addAppointmentDate">Date:</label>
+                        <input type="date" id="addAppointmentDate" required>
+            
+                        <label for="addAppointmentTime">Time:</label>
+                        <select type="time" id="addAppointmentTime" required>
+                            <option value="">Select Time</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                        </select>
+
+                        <label for="addAppointmentType">Appointment Type:</label>
+                        <select id="addAppointmentType" required>
+                            <option value="">Select Type</option>
+                            <option value="Walk-in">Walk-in</option>
+                            <option value="Booking">Booking</option>
+                        </select>
+
+                        <button class="submit-button" id="submitAddAppointment">Add Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Appointment Modal -->
+            <div id="editAppointmentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeEditAppointmentModal()">&times;</span>
+                    <h3>Edit Appointment</h3>
+                    <div id="editAppointmentMessage" class="messageDiv"></div>
+                    <form id="editAppointmentForm">
+                        <label for="editAppointmentStatus">Status:</label>
+                        <select id="editAppointmentStatus" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="No Show">No Show</option>
+                        </select>
+
+                        <button class="submit-button" id="submitEditAppointment">Update Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-queue_management">
+            <h2>Queue Management</h2>
+        
+            <button class="btn-add" onclick="openAddQueueModal()">+ Add Walk-in</button>
+        
+            <table class="queue-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Barber</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="queueTableBody">
+                    <!-- Queue will be dynamically inserted here -->
+                </tbody>
+            </table>
+
+            <!-- Add Walk-in Modal -->
+            <div id="addQueueModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddQueueModal()">&times;</span>
+                    <h3>Add Walk-in Client</h3>
+                    <form id="addQueueForm">
+                        <label for="walkInClient">Client Name:</label>
+                        <input type="text" id="walkInClient" required>
+            
+                        <label for="walkInBarber">Barber:</label>
+                        <select id="walkInBarber" required>
+                            <option value="Mike">Mike</option>
+                            <option value="David">David</option>
+                            <option value="Chris">Chris</option>
+                        </select>
+            
+                        <label for="walkInTime">Time:</label>
+                        <input type="time" id="walkInTime" required>
+            
+                        <button type="submit">Add to Queue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-service_management">
+            <h2>Service Management</h2>
+            <button class="btn-add" onclick="openAddServiceModal()">+ Add Service</button>
+
+    
+            <table class="queue-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="serviceTableBody">
+                    <!-- Services will be dynamically inserted here -->
+                </tbody>
+            </table>
+            <div id="editServiceModal" class="modal">
+                <div class="modal-content">
+                    <h2>Edit Service</h2>
+                    <form id="editServiceForm">
+                        <input type="hidden" id="editServiceId">
+                        <label>Name:</label>
+                        <input type="text" id="editServiceName" required>
+                        <label>Description:</label>
+                        <input type="text" id="editServiceDescription" required>
+                        <label>Price:</label>
+                        <input type="number" id="editServicePrice" step="0.01" required>
+                        <button style ="margin-bottom: 10px;" type="submit">Update Service</button>
+                        <button type="button" onclick="closeEditModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Add Service Modal -->
+            <div id="addServiceModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddServiceModal()">&times;</span>
+                    <h3>Add New Service</h3>
+                    <form id="addServiceForm">
+                        <label for="serviceName">Service Name:</label>
+                        <input type="text" id="serviceName" required>
+    
+                        <label for="serviceDescription">Description:</label>
+                        <input type="text" id="serviceDescription" required>
+    
+                        <label for="servicePrice">Price:</label>
+                        <input type="number" id="servicePrice" required>
+    
+                        <button type="submit">Add Service</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-review_moderation">
+            <h2>Review Moderation</h2>
+        
+            <table class="review-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Rating</th>
+                        <th>Review</th>
+                        <th>Barber</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewTableBody">
+                    <!-- Reviews will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="main-reports_analytics">
+            <h2>Reports & Analytics</h2>
+        
+            <div class="report-cards">
+                <div class="report-card">
+                    <h3>Total Revenue</h3>
+                    <p id="totalRevenue">$0.00</p>
+                </div>
+        
+                <div class="report-card">
+                    <h3>Total Appointments</h3>
+                    <p id="totalAppointments">0</p>
+                </div>
+        
+                <div class="report-card">
+                    <h3>Returning Clients</h3>
+                    <p id="returningClients">0</p>
+                </div>
+        
+                <div class="report-card">
+                    <h3>New Clients</h3>
+                    <p id="newClients">0</p>
+                </div>
+            </div>
+        
+            <h3>Appointments by Barber</h3>
+            <canvas id="barberChart"></canvas>
+        
+            <h3>Popular Services</h3>
+            <canvas id="serviceChart"></canvas>
+        
+            <button onclick="exportReport()">Download CSV Report</button>
+        </div>        
+
+        <div class="main-notification_management">
+            <h2>Notification Management</h2>
+        
+            <div class="notification-form">
+                <form id="notification-form">
+                    <div class="form-flex">
+                        <div>
+                            <label for="recipientType">Recipient Type:</label>
+                            <select id="recipientType">
+                                <option id="client" value="client">Clients</option>
+                                <option id="barber" value="barber">Barbers</option>
+                            </select>
+                        </div>
+                        <div>                    
+                            <label for="statusType">Status:</label>
+                            <select id="statusType">
+                                <option id="confirmed" value="confirmed">Confirmed</option>
+                                <option id="cancelled" value="cancelled">Cancelled</option>
+                                <option id="rescheduled" value="rescheduled">Rescheduled</option>
+                            </select></div>
+                        <div>
+                            <input type="email" id="user_email" name="email" maxlength="80" placeholder="Email Address" required>
+                                            
+                            <input type="text" id="searchInput" placeholder="Search Appointment by Name">
+                        </div>
+                    </div>
+                    <br>
+                    <select id="appointmentSelect">
+                        <option> Select Appointment </option>
+                        <!-- Appointments are dynamically displayed-->
+                    </select>
+                    
+                    <label for="notificationMessage">Message:</label>
+                    <textarea id="notificationMessage" rows="3" placeholder="Enter notification message"></textarea>
+            
+                    <button type="submit">Send Notification</button>
+
+                </form>
+            </div>
+            <br>
+            <h3>Sent Notifications</h3>
+            <table class="notification-table">
+                <thead>
+                    <tr>
+                        <th>Recipient Type</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="notificationTableBody">
+                    <!-- Notifications will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="main-system_settings">
+            <h2>System Settings</h2>
+        
+            <!-- Business Hours Settings -->
+            <div class="settings-section">
+                <h3>Business Hours</h3>
+                <label for="openingTime">Opening Time:</label>
+                <input type="time" id="openingTime">
+                <label for="closingTime">Closing Time:</label>
+                <input type="time" id="closingTime">
+                <button onclick="saveBusinessHours()">Save</button>
+            </div>
+        
+            <!-- Service Duration Settings -->
+            <div class="settings-section">
+                <h3>Service Duration</h3>
+                <label for="serviceDuration">Duration per Appointment (minutes):</label>
+                <input type="number" id="serviceDuration" min="10" max="120">
+                <button onclick="saveServiceDuration()">Save</button>
+            </div>
+        
+            <!-- Booking Preferences -->
+            <div class="settings-section">
+                <h3>Booking Preferences</h3>
+                <label for="maxBookings">Max Bookings per Day:</label>
+                <input type="number" id="maxBookings" min="1" max="100">
+                <label>
+                    <input type="checkbox" id="onlineBookings"> Enable Online Bookings
+                </label>
+                <button onclick="saveBookingPreferences()">Save</button>
+            </div>
+        
+            <!-- Security Settings -->
+            <div class="settings-section">
+                <h3>Security Settings</h3>
+                <label>
+                    <input type="checkbox" id="passwordPolicy"> Enforce Strong Passwords
+                </label>
+                <label>
+                    <input type="checkbox" id="accountLockout"> Enable Account Lockout After 3 Failed Logins
+                </label>
+                <button onclick="saveSecuritySettings()">Save</button>
+            </div>
+        
+            <!-- Backup & Restore -->
+            <div class="settings-section">
+                <h3>Backup & Restore</h3>
+                <button onclick="backupData()">Backup Data</button>
+                <input type="file" id="restoreFile">
+                <button onclick="restoreData()">Restore Data</button>
+            </div>
+        </div>        
+
+        <div class="main-security_backups">
+            <h2>Security & Backups</h2>
+        
+            <!-- User Authentication Settings -->
+            <div class="security-section">
+                <h3>Authentication & Security Policies</h3>
+                <label>
+                    <input type="checkbox" id="strongPasswords"> Enforce Strong Passwords
+                </label>
+                <label>
+                    <input type="checkbox" id="enable2FA"> Enable Two-Factor Authentication (2FA)
+                </label>
+                <label for="autoLogout">Auto Logout After (minutes):</label>
+                <input type="number" id="autoLogout" min="1" max="60">
+                <button onclick="saveSecuritySettings()">Save</button>
+            </div>
+        
+            <!-- Account Management -->
+            <div class="security-section">
+                <h3>Account Management</h3>
+                <button onclick="viewLockedAccounts()">View Locked Accounts</button>
+                <button onclick="viewLoginAttempts()">View Failed Login Attempts</button>
+            </div>
+        
+            <!-- Backup & Restore -->
+            <div class="security-section">
+                <h3>Backup & Restore</h3>
+                <button onclick="backupData()">Backup Data</button>
+                <input type="file" id="restoreFile">
+                <button onclick="restoreData()">Restore Data</button>
+            </div>
+        
+            <!-- Audit Logs -->
+            <div class="security-section">
+                <h3>Audit Logs & Activity Monitoring</h3>
+                <button onclick="viewAuditLogs()">View Logs</button>
+            </div>
+        </div>        
+    </div>
+
+    <!--=============== ADMIN JS ===============-->
+    <script src="admin-script.js"></script>
+    <script src="Overview Components/overview-script.js"></script>
+    <script src="User Management Components/user_management-script.js"></script>
+    <script type="module" src="User Management Components/user_management-database.js"></script>
+    <script src="Appointment Management Components/appointment_management-script.js"></script>
+    <script type="module" src="Appointment Management Components/appointment_management-database.js"></script>
+    <script src="Queue Management Components/queue_management-script.js"></script>
+    <script src="Service Management Components/service_management-script.js"></script>
+    <script type="module" src="Service Management Components/service_management-database.js"></script>
+    <script src="Review Moderation Components/review_moderation-script.js"></script>
+    <script src="Reports Analytics Components/reports_analytics-script.js"></script>
+    <script type="module" src="Notification Management Components/notification_management-script.js"></script>
+    <script src="System Settings Components/system_settings-script.js"></script>
+    <script src="Security Backups Components/security_backups-script.js"></script>
+</body>
+</html>

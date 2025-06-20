@@ -1,0 +1,73 @@
+body {
+    overflow-x: hidden;
+}
+
+#about_us {
+    background-color: #ffffff;
+}
+
+#about_us .about {
+    margin-top: 1%;
+    background-image: url('/assets/images/header2.jpg');
+    background-size: cover;
+    background-position: top;
+    width:100%;
+    max-width: 100%;
+    height: 70vh;
+}
+
+#about_us .about .about_title {
+    padding: 10% 10% 0px 10%;
+    width: 80%;
+    margin-left: 50%;
+}
+
+#about_us .about .about_title h1 {
+    font-size: 100px;
+    color: #fff;
+    text-shadow: 5px 5px 10px #2b2b2b7a;
+}
+
+#about_us .about .about_title h2 {
+    color: #979797;
+    text-align: center;
+    width: 50%;
+    margin-top: -3%;
+}
+
+#about_us .about_content {
+    display: flex;
+    align-items: flex-start;
+    margin: 5% 10% 0 10%;
+    text-align: justify;
+}
+
+#about_us .about_content .about_federal {
+    padding: 0 10%;
+}
+
+#about_us .about_content .about_federal h1 {
+    font-size: 100px;
+}
+
+#about_us .gallery {
+    margin: 5% 2%;
+}
+
+.gallery .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.gallery .row .col {
+    box-sizing: border-box;
+    width: 32.5%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.gallery .row .col img {
+    width: 100%;
+    border-radius:10px;
+}

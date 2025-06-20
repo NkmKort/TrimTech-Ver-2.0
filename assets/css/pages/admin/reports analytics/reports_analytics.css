@@ -1,0 +1,12 @@
+.main-reports_analytics {
+    padding: 20px;
+}
+
+.reports_analytics-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-bottom: 20px;
+}

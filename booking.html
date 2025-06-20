@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets\css\global\reset.css">
+    <link rel="stylesheet" href="assets\css\global\styles.css">
+    <link rel="stylesheet" href="assets\css\pages\booking\booking.css">
+
+    <title>Federal Barbers - Booking</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Your Appointment</h1>
+        <div id="calendar" class="calendar"></div>
+        
+        <div class="input-group">
+            <label for="time">Choose Time</label>
+            <select id="time" required>
+                <option value="">Select Time</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+            </select>
+
+            <label for="chooseBranch">Choose Branch</label>
+            <select id="chooseBranch" required>
+                <option value="">Select Branch</option>
+                <!-- Branches are dynamically loaded her -->
+            </select>
+            
+            <label for="chooseService">Choose Barber Service</label>
+            <select id="chooseService" required>
+                <option value="">Select Service</option>
+                <!-- Services are dynamically loaded here -->
+            </select>
+
+            <label for="chooseBarber">Choose Barber</label>
+            <select id="chooseBarber" required>
+                <option value="">Select Barber</option>
+                <!-- Barbers are dynamically loaded her -->
+            </select>
+                    
+            <button id="bookBtn">Book Appointment</button>
+            <button id="exitBtn">Exit</button>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script type="module" src="assets\js\pages\booking\booking.js"></script>
+    <script type="module" src="assets\js\pages\booking\database.js"></script>
+</body>
+</html>

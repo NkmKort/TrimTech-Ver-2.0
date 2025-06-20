@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="login-style.css">
+        <link rel="stylesheet" href="../main.css">
+
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+      
+
+      <title>Form Page</title>
+   </head>
+   <body>
+
+        <div class="login">
+            <img src="login-bg.jpg" alt="login image" class="loginbg">
+
+            <!--=============== Login Form ===============-->
+
+            <form action="" class="login-form active">
+                <h1 class="login-title">Login</h1>
+                <div id="signInMessage" class="messageDiv" style="display: none;"></div>
+                <div class="login-contents">
+                    <div class="login-box">
+                        <i class="ri-user-5-line login-icon"></i>
+
+                        <div class="login-box-input">
+                            <input type="email" class="login-input" id="login-email" placeholder=" " required>
+                            <label for="" class="login-label">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="login-box">
+                        <i class="ri-lock-2-line"></i>
+
+                        <div class="login-box-input">
+                            <input type="password" class="login-input" id="login-password" placeholder=" " required>
+                            <label for="" class="login-label">Password</label>
+                            <i class="ri-eye-close-line login-viewoff" id="login-eye" ></i>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="login-check">
+                    <a href="#" class="login-forgot">Forgot Password?</a>
+                </div>
+
+                <button class="login-button" id="submitSignIn">Login</button>
+
+                <p class="login-register">Dont have an account?
+                    <br>
+                    <a href="#" id="show-signup">Sign Up</a>
+                </p>
+            </form>
+
+            <!--=============== Sign Up Form ===============-->
+
+            <form action="" class="signup-form">
+                <h1 class="signup-title">Sign Up</h1>
+                <div id="signUpMessage" class="messageDiv" style="display: none;"></div>
+                <div class="signup-contents">
+                    <div class="signup-box">
+                        <i class="ri-user-5-line login-icon"></i>
+
+                        <div class="signup-box-input">
+                            <input type="name" class="signup-input" placeholder=" " id="rName" required>
+                            <label for="" class="signup-label">Name</label>
+                        </div>
+                    </div>
+
+                    <div class="signup-box">
+                        <i class="ri-mail-line login-icon"></i>
+
+                        <div class="signup-box-input">
+                            <input type="email" class="signup-input" placeholder=" " id="rEmail" required>
+                            <label for="" class="signup-label">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="signup-box">
+                        <i class="ri-phone-line login-icon"></i>
+
+                        <div class="signup-box-input">
+                            <input type="text" class="signup-input" id="signup-phone" placeholder=" " required required pattern="0[9][0-9]{9}" maxlength="11">
+                            <label for="" class="signup-label">Phone Number(63+)</label>
+                        </div>
+                    </div>
+
+                    <div class="signup-box">
+                        <i class="ri-lock-2-line"></i>
+
+                        <div class="signup-box-input">
+                            <input type="password" class="signup-input" id="signup-password" placeholder=" " required>
+                            <label for="" class="signup-label">Password</label>
+                            <i class="ri-eye-close-line login-viewoff" id="signup-eye" ></i>
+                        </div>                       
+                    </div>
+                </div>
+
+                <button class="signup-button" id="submitSignup">Sign Up</button>
+
+                <p class="signup-register">Already have an account?
+                    <br>
+                    <a href="../Home Page/homepage.html" id="show-login">Login</a>
+                </p>
+            </form>
+        </div>
+      
+      <!--=============== MAIN JS ===============-->
+      <script src="login-main.js"></script>
+      <script type="module" src="Database.js"></script>
+
+   </body>
+</html>
