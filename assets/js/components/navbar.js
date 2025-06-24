@@ -159,7 +159,11 @@ async function fetchAppointments() {
     }
 
     // 🔹 Filter appointments that belong to the logged-in user
-    const userAppointments = data.filter(appt => appt.Customers.Users.email === userEmail);
+    const userAppointments = data.filter(
+        appt => appt?.Customers?.Users?.email === userEmail
+    );
+
+    console.log("Fetched appointments:", data);
 
     // Sort appointments by date (ascending)
     appointmentData = userAppointments.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -220,12 +224,12 @@ function displayAppointments(appointments) {
     });
 
     // Attach event listeners to cancel buttons
-    document.querySelectorAll(".cancel-btn").forEach(button => {
-        button.addEventListener("click", async (event) => {
-            const appointmentId = event.target.getAttribute("data-id");
-            cancelAppointment(appointmentId);
-        });
-    });
+    //document.querySelectorAll(".cancel-btn").forEach(button => {
+    //    button.addEventListener("click", async (event) => {
+    //        const appointmentId = event.target.getAttribute("data-id");
+    //        cancelAppointment(appointmentId);
+    //    });
+    //});
 }
 
 

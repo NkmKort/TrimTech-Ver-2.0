@@ -43,10 +43,6 @@
                     </div>
                 </div>
 
-                <div class="login-check">
-                    <a href="#" class="login-forgot">Forgot Password?</a>
-                </div>
-
                 <button class="login-button" id="submitSignIn">Login</button>
 
                 <p class="login-register">Dont have an account?
@@ -67,6 +63,15 @@
                             <input type="name" class="signup-input" placeholder=" " id="rName" required>
                             <label for="" class="signup-label">Name</label>
                         </div>
+
+                        <script>
+                            //const nameInput = document.getElementById('rName');
+
+                            //nameInput.addEventListener('input', function () {
+                                // Allow only letters and spaces
+                            //    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                            //});
+                        </script>
                     </div>
 
                     <div class="signup-box">
@@ -76,6 +81,15 @@
                             <input type="email" class="signup-input" placeholder=" " id="rEmail" required>
                             <label for="" class="signup-label">Email</label>
                         </div>
+
+                        <script>
+                            //const emailInput = document.getElementById('rEmail');
+
+                            //emailInput.addEventListener('input', function () {
+                                // Allow only a-z, A-Z, 0-9, @ and .
+                            //    this.value = this.value.replace(/[^a-zA-Z0-9@.]/g, '');
+                            //});
+                        </script>
                     </div>
 
                     <div class="signup-box">
@@ -85,6 +99,15 @@
                             <input type="text" class="signup-input" id="signup-phone" placeholder=" " required required pattern="0[9][0-9]{9}" maxlength="11">
                             <label for="" class="signup-label">Phone Number(63+)</label>
                         </div>
+
+                        <script>
+                            //const phoneInput = document.getElementById('signup-phone');
+
+                            //phoneInput.addEventListener('input', function () {
+                                // Allow only numbers
+                            //    this.value = this.value.replace(/[^0-9]/g, '');
+                            //});
+                        </script>
                     </div>
 
                     <div class="signup-box">
