@@ -5,7 +5,7 @@
     flex-direction: column;
     text-align: center;
     background: linear-gradient(rgba(0, 0, 0, 0.692), rgba(0, 0, 0, 0.712)), 
-                url('/assets/images/bglogo.png');
+                url('/assets/images/contact-image.png');
     background-size: cover;
     background-position: center;
     height: 80vh;
@@ -60,7 +60,7 @@
 
 .image-section {
     flex: 1;
-    background: url('/assets/images/4.jpg') center/cover no-repeat;
+    background: url('/assets/images/review-image.jpg') center/cover no-repeat;
 }
 
 .form-section {

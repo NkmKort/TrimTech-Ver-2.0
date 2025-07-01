@@ -100,12 +100,12 @@
     display: flex;
     justify-content: center;
     gap: 15px; 
-    margin-top: 20px;
+    margin: 15px;
 }
 
 .image-gallery img {
     width: 30%; /* Make sure they fit evenly */
-    height: 200px; 
+    height: 350px; 
     object-fit: cover; /* Prevent stretching */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);

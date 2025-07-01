@@ -9,18 +9,44 @@ async function fetchServiceName() {
                 name
             `);
 
-        if (error) {
-            throw error;
-        }
+        if (error) throw error;
+
+        // Define allowed filenames
+        const allowedFilenames = [
+            "service-hairart.jpg",
+            "service-haircut.jpg",
+            "service-massage(15minutes).jpg",
+            "service-massage(30minutes).jpg",
+            "service-shampoo&blowdry.jpg",
+            "service-shave.jpg",
+            "service-shave&trim.jpg"
+        ];
+
+        // Convert to allowed service name strings
+        const allowedServiceNames = allowedFilenames.map(filename =>
+            filename
+                .replace(/^service-/, '')
+                .replace(/\.jpg$/, '')
+                .toLowerCase()
+        );
 
         const serviceDrops = document.querySelectorAll('.drop-service');
         serviceDrops.forEach(dropdown => {
             dropdown.innerHTML = '<option>Select Service</option>';
+
             data.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service.service_id;
-                option.textContent = service.name;
-                dropdown.appendChild(option);
+                // Format service name to match filename logic
+                const formattedServiceName = service.name
+                    .toLowerCase()
+                    .replace(/\s+/g, '') // remove spaces
+                    .replace(/&/g, '&'); // preserve ampersands (in case normalization is needed)
+
+                if (allowedServiceNames.includes(formattedServiceName)) {
+                    const option = document.createElement('option');
+                    option.value = service.service_id;
+                    option.textContent = service.name;
+                    dropdown.appendChild(option);
+                }
             });
         });
 
@@ -28,6 +54,7 @@ async function fetchServiceName() {
         console.error("Error fetching services:", err.message);
     }
 }
+
 
 async function fetchBarberName() {
     try {

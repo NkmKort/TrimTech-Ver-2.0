@@ -8,7 +8,7 @@ body {
 
 #about_us .about {
     margin-top: 1%;
-    background-image: url('/assets/images/header2.jpg');
+    background-image: url('/assets/images/about-picture.jpg');
     background-size: cover;
     background-position: top;
     width:100%;
@@ -70,4 +70,14 @@ body {
 .gallery .row .col img {
     width: 100%;
     border-radius:10px;
+}
+
+img[alt="instrument-photo"] {
+    margin-top: 16px;
+    width: 500px; /* Adjust as needed */
+    height: 500px; /* Adjust as needed */
+    object-fit: cover; /* Ensures the image fills the box and crops the excess */
+    border-radius: 8px; /* Optional: Rounded corners */
+    overflow: hidden;
+    display: block;
 }

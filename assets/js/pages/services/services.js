@@ -22,7 +22,7 @@ async function fetchServices() {
         serviceItem.classList.add('gallery-item');
 
         // Construct image name from service name (ensure it matches your actual file names)
-        const imageName = service.name.toLowerCase().replace(/\s+/g, '') + ".jpg";
+        const imageName = "service-" + service.name.toLowerCase().replace(/\s+/g, '') + ".jpg";
 
         serviceItem.innerHTML = `
             <img src="assets/images/${imageName}" alt="${service.name}">

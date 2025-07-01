@@ -24,13 +24,36 @@ async function fetchAndDisplayOptions() {
             .select('service_id, name');
         if (servicesError) throw servicesError;
 
+        // Define allowed filenames
+        const allowedFilenames = [
+            "service-hairart.jpg",
+            "service-haircut.jpg",
+            "service-massage(15minutes).jpg",
+            "service-massage(30minutes).jpg",
+            "service-shampoo&blowdry.jpg",
+            "service-shave.jpg",
+            "service-shave&trim.jpg"
+        ];
+
+        // Extract allowed service names by reversing filename format
+        const allowedServiceNames = allowedFilenames.map(filename => 
+            filename
+                .replace(/^service-/, '') // remove prefix
+                .replace(/\.jpg$/, '')     // remove suffix
+                .toLowerCase()
+        );
+
+        // Filter and display only allowed services
         const serviceSelect = document.getElementById('chooseService');
         serviceSelect.innerHTML = '<option value="">Select Service</option>';
         services.forEach(service => {
-            const option = document.createElement('option');
-            option.value = service.service_id;
-            option.textContent = service.name;
-            serviceSelect.appendChild(option);
+            const serviceNameFormatted = service.name.toLowerCase().replace(/\s+/g, '').replace(/&/g, '&'); // sanitize similarly
+            if (allowedServiceNames.includes(serviceNameFormatted)) {
+                const option = document.createElement('option');
+                option.value = service.service_id;
+                option.textContent = service.name;
+                serviceSelect.appendChild(option);
+            }
         });
 
         // Fetch Branches
