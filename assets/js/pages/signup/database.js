@@ -103,3 +103,5 @@ forgotPasswordButton.addEventListener('click', async (event) => {
         showMessage("Unable to send password reset email: " + error.message, "forgotPasswordMessage");
     }
 });
+
+

@@ -49,8 +49,17 @@
     <div id="appointmentSidebar" class="sidebar">
         <br>
         <h2>Your Appointments</h2>
-        <ul id="appointmentList" class="appointment-list"></ul>
+        <div style="margin-bottom: 1rem;">
+            <h3>Time Format:</h3>
+            <label class="switch">
+                <input type="checkbox" id="timeFormatToggle">
+                <span class="slider"></span>
+            </label>
+            <span id="formatLabel">24H</span>
+        </div>
         <button id="closeSidebar">Close</button>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        
     </div>
     <section id="about_us">
         <div class="about">

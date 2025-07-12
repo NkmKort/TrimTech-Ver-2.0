@@ -1,6 +1,8 @@
 import { isAdmin, getCurrentSession } from "../auth/session.js";
 import { supabase } from "../config/supabase.js";
 
+let timeFormat = "24"; // default
+
 document.addEventListener("DOMContentLoaded", async function () {
     const navItems = document.querySelector(".nav-items"); // Select the nav-items container
     const navIcons = document.querySelector(".nav-icons");
@@ -72,6 +74,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 document.addEventListener("DOMContentLoaded", () => {
     const userIcon = document.querySelector("#user-icon");
     const dropdown = document.querySelector(".user-dropdown");
+
+
 
     if (userIcon && dropdown) {
         userIcon.addEventListener("click", (event) => {
@@ -171,6 +175,17 @@ async function fetchAppointments() {
     displayAppointments(appointmentData);
 }
 
+function formatTime(timeString) {
+    if (timeFormat === "24") return timeString;
+
+    const [hour, minute] = timeString.split(":").map(Number);
+    const period = hour >= 12 ? "PM" : "AM";
+    const hour12 = hour % 12 || 12;
+
+    return `${hour12.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")} ${period}`;
+}
+
+
 function displayAppointments(appointments) {
     const appointmentList = document.getElementById("appointmentList");
 
@@ -197,23 +212,23 @@ function displayAppointments(appointments) {
         appointmentItem.innerHTML = `
             <h3>${appt.Services.name}</h3>
             <p><strong>Date:</strong> ${new Date(appt.date).toDateString()}</p>
-            <p><strong>Time:</strong> ${appt.time}</p>
+            <p><strong>Time:</strong> ${formatTime(appt.time)}</p>
             <p><strong>Barber:</strong> ${appt.Barbers.Staff.Users.name}</p>
             <p><strong>Status:</strong> <span class="status">${appt.status}</span></p>
         `;
-    
+
         // ✅ Append the cancel button only if the appointment is NOT "Completed"
         if (appt.status.toLowerCase() !== "completed" && appt.status.toLowerCase() !== "cancelled") {
             const cancelButton = document.createElement("button");
             cancelButton.classList.add("cancel-btn");
             cancelButton.setAttribute("data-id", appt.appointment_id);
             cancelButton.textContent = "Cancel";
-    
+
             cancelButton.addEventListener("click", async (event) => {
                 const appointmentId = event.target.getAttribute("data-id");
                 cancelAppointment(appointmentId);
             });
-            
+
             appointmentItem.appendChild(cancelButton); // ✅ Append instead of replacing innerHTML
 
         }
@@ -232,23 +247,106 @@ function displayAppointments(appointments) {
     //});
 }
 
+let selectedAppointmentId = null;
 
-async function cancelAppointment(appointmentId) {
-    if (!confirm("Are you sure you want to cancel this appointment?")) return;
+document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Globally exposed so it works with onclick=""
+    window.closeCancelModal = function () {
+        document.getElementById("cancelModal").style.display = "none";
+        document.getElementById("cancelForm").reset();
+        document.getElementById("otherReason").value = "";
+        document.getElementById("otherReason").disabled = true;
+    };
 
-    const { error } = await supabase
-        .from('Appointments')
-        .update({ status: "Cancelled" })
-        .eq('appointment_id', appointmentId);
+    // ✅ Enable/disable 'Other' input field
+    const reasonRadios = document.querySelectorAll('input[name="reason"]');
+    reasonRadios.forEach(radio => {
+        radio.addEventListener("change", () => {
+            const isOther = radio.value === "Other";
+            const otherInput = document.getElementById("otherReason");
+            otherInput.disabled = !isOther;
+            if (!isOther) otherInput.value = "";
+        });
+    });
 
-    if (error) {
-        console.error("Error canceling appointment:", error);
-        alert("Failed to cancel appointment.");
-    } else {
-        alert("Appointment cancelled successfully!");
-        fetchAppointments(); // Refresh the list
-    }
+
+
+    // ✅ Handle form submission
+    document.getElementById("cancelForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const selectedReason = document.querySelector('input[name="reason"]:checked');
+        if (!selectedReason) {
+            alert("Please select a reason for cancellation.");
+            return;
+        }
+
+        let reason = selectedReason.value;
+        if (reason === "Other") {
+            const otherText = document.getElementById("otherReason").value.trim();
+            if (!otherText) {
+                alert("Please provide a reason.");
+                return;
+            }
+            reason = otherText;
+        }
+
+        const { error } = await supabase
+            .from('Appointments')
+            .update({
+                status: "Cancelled",
+                cancellation_reason: reason
+            })
+            .eq('appointment_id', selectedAppointmentId);
+
+        if (error) {
+            console.error("Error canceling appointment:", error);
+            alert("Failed to cancel appointment.");
+        } else {
+            alert("Appointment cancelled successfully!");
+            fetchAppointments();
+            closeCancelModal();
+        }
+    });
+});
+
+// ✅ This function shows the modal and sets the current appointment ID
+function cancelAppointment(appointmentId) {
+    selectedAppointmentId = appointmentId;
+    document.getElementById("cancelModal").style.display = "flex";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Set the default toggle switch state
+    const timeToggle = document.getElementById("timeFormatToggle");
+    const formatLabel = document.getElementById("formatLabel");
+
+    // Initialize toggle based on current timeFormat
+    if (timeFormat === "12") {
+        timeToggle.checked = true;
+        formatLabel.textContent = "12H";
+    } else {
+        timeToggle.checked = false;
+        formatLabel.textContent = "24H";
+    }
+
+    // Handle switch change
+    timeToggle.addEventListener("change", () => {
+        if (timeToggle.checked) {
+            timeFormat = "12";
+            formatLabel.textContent = "12H";
+        } else {
+            timeFormat = "24";
+            formatLabel.textContent = "24H";
+        }
+        displayAppointments(appointmentData);
+    });
+
+    // Optional: fetchAppointments() should still be called here
+    fetchAppointments();
+});
+
+
 
 // Load appointments when the sidebar icon is clicked
 document.getElementById("listIcon").addEventListener("click", fetchAppointments);

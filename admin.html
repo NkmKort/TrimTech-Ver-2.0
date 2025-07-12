@@ -70,8 +70,16 @@
     <div id="appointmentSidebar" class="sidebar">
         <br>
         <h2>Your Appointments</h2>
-        <ul id="appointmentList" class="appointment-list"></ul>
+        <div style="margin-bottom: 1rem;">
+            <h3>Time Format:</h3>
+            <label class="switch">
+                <input type="checkbox" id="timeFormatToggle">
+                <span class="slider"></span>
+            </label>
+            <span id="formatLabel">24H</span>
+        </div>
         <button id="closeSidebar">Close</button>
+        <ul id="appointmentList" class="appointment-list"></ul>
     </div>
     <!-- Sidebar -->
     <div class="admin-sidebar">
@@ -749,6 +757,17 @@
             <!-- Search & Filter -->
             <div class="search">
                 <input type="text" id="searchReview" placeholder="Search..." onkeyup="filterReviews()">
+            </div>
+
+            <div>
+            <select id="filterRating" onchange="filterReviews()">
+                <option value="">All Ratings</option>
+                <option value="5">⭐ 5 Stars</option>
+                <option value="4">⭐ 4 Stars</option>
+                <option value="3">⭐ 3 Stars</option>
+                <option value="2">⭐ 2 Stars</option>
+                <option value="1">⭐ 1 Star</option>
+            </select>
             </div>
 
             <!-- Reviews Table List -->

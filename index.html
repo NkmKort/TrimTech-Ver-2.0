@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +14,15 @@
     <link rel="stylesheet" href="assets\css\components\footer.css">
     <link rel="stylesheet" href="assets\css\pages\home\home.css">
 
-    <title>Noble Barbers - Home</title>    
+    <title>Noble Barbers - Home</title>
 </head>
+
 <body id="top">
     <!-- Navbar -->
     <nav class="navbar">
         <ul class="nav-links">
             <li class="logo"><a href="index.html"><img src="assets/images/noblebarbers-logo.jpg" alt="Logo"></a></li>
-            
+
             <div class="nav-items">
                 <li><a href="booking.html">Booking</a></li>
                 <li><a href="about.html">About</a></li>
@@ -46,76 +48,123 @@
     <div id="appointmentSidebar" class="sidebar">
         <br>
         <h2>Your Appointments</h2>
-        <ul id="appointmentList" class="appointment-list"></ul>
+        <div style="margin-bottom: 1rem;">
+            <h3>Time Format:</h3>
+            <label class="switch">
+                <input type="checkbox" id="timeFormatToggle">
+                <span class="slider"></span>
+            </label>
+            <span id="formatLabel">24H</span>
+        </div>
         <button id="closeSidebar">Close</button>
+        <ul id="appointmentList" class="appointment-list"></ul>
+        
     </div>
     <!-- Header Image -->
     <div id="header"><video autoplay muted loop id="header-video">
-        <source src="assets/images/NobleBarbers.mp4" type="video/mp4">
-        <img src="assets\images\header-img.png" alt="Header Image">
-    </video>
-    
-    
-    <div class="header-content">
-        <h1>A Noble Cut For A Noble Man.</h1>
-        <p>Step into Noble Barbers Cavite and experience grooming elevated to an art form. Our skilled barbers provide precision cuts and classic styles for the modern gentleman. We believe a haircut is more than just a trim—it's a statement of confidence and a reflection of character. Come in and get a cut that is truly worthy of a noble man.</p>
-        <a style="font-size: 1em" href="booking.html" class="book-now-btn">Book Appointment</a>
+            <source src="assets/images/NobleBarbers.mp4" type="video/mp4">
+            <img src="assets\images\header-img.png" alt="Header Image">
+        </video>
+
+
+        <div class="header-content">
+            <h1>A Noble Cut For A Noble Man.</h1>
+            <p>Step into Noble Barbers Cavite and experience grooming elevated to an art form. Our skilled barbers
+                provide precision cuts and classic styles for the modern gentleman. We believe a haircut is more than
+                just a trim—it's a statement of confidence and a reflection of character. Come in and get a cut that is
+                truly worthy of a noble man.</p>
+            <a style="font-size: 1em" href="booking.html" class="book-now-btn">Book Appointment</a>
+        </div>
     </div>
-</div>
     <!-- Info Area -->
     <section id="info-section">
         <div class="info-section-innerbox">
             <h2>Our Styles & Services</h2>
 
-    
+
             <!-- Image Gallery -->
             <div class="image-gallery">
                 <img src="assets/images/service-style-buzz.jpg" alt="Haircut Style 1">
                 <img src="assets/images/service-style-fade.jpg" alt="Haircut Style 2">
                 <img src="assets/images/service-style-mullet.jpg" alt="Haircut Style 3">
             </div>
-    
+
             <!-- View All Button -->
             <a href="services.html" class="view-all-btn">View All</a>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
                 <a href="index.html"><img src="assets/images/noblebarbers-logo.jpg" alt="Noble Barbers Logo"></a>
             </div>
-    
+
             <div class="footer-links">
                 <a href="booking.html">Booking</a>
                 <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="contact.html">Contact Us</a>
             </div>
-            
+
             <div class="footer-links">
-                <a href="#header">Home</a>  
-                <a href="#info-section">Styles & Services</a>  
-                <a href="#info-section">View Appoinments</a>  
-                <a href="#top">Back to Top</a>   
+                <a href="#header">Home</a>
+                <a href="#info-section">Styles & Services</a>
+                <a href="#info-section">View Appoinments</a>
+                <a href="#top">Back to Top</a>
             </div>
 
             <div class="footer-main-social">
                 <p>Socials</p>
                 <div class="footer-social">
-                    <a href="#"><i  class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-facebook-fill"></i></a>
                     <a href="#"><i class="ri-instagram-line"></i></a>
                     <a href="#"><i class="ri-twitter-x-line"></i></a>
                 </div>
             </div>
         </div>
-    
+
         <div class="footer-bottom">
             <p>© 2025 Trim Tech. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script type="module" src="assets/js/components/navbar.js"></script>
+
+    <!-- Cancellation Reason Modal -->
+    <div id="cancelModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Select a reason for cancellation:</h3>
+            <form id="cancelForm">
+                <label><input type="radio" name="reason" value="⏰ I have a schedule conflict"> ⏰ I have a schedule
+                    conflict</label><br>
+                <label><input type="radio" name="reason" value="🚫 I no longer need the service"> 🚫 I no longer need
+                    the service</label><br>
+                <label><input type="radio" name="reason" value="💸 I found another provider"> 💸 I found another
+                    provider</label><br>
+                <label><input type="radio" name="reason" value="🏥 I’m not feeling well / personal emergency"> 🏥
+                    Personal emergency</label><br>
+
+                <label><input type="radio" name="reason" value="📍 I can’t travel to the branch"> 📍 I can’t travel to
+                    the branch</label><br>
+                <label><input type="radio" name="reason" value="💬 I booked by mistake"> 💬 I booked by
+                    mistake</label><br>
+                <label><input type="radio" name="reason" value="Other"> Other: <input type="text" id="otherReason"
+                        disabled></label><br><br>
+
+                <button type="submit" class="cancel-btn">Confirm Cancellation</button>
+                <button type="button" class="cancel-btn" onclick="closeCancelModal()">Cancel</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+
+
 </body>
+
 </html>
